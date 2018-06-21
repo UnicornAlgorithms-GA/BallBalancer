@@ -71,7 +71,7 @@ public class BalancerPopulation : PopulationProxy
             weightConstraints.y
         );
 
-		var bias = model.AddBiasNeuron();
+		//var bias = model.AddBiasNeuron();
 
         var layers = new List<Neuron[]>()
         {
@@ -80,10 +80,10 @@ public class BalancerPopulation : PopulationProxy
                 agentPrefab.GetComponent<AgentProxy>().nbOfInputs
             ).ToArray(),
 
-            model.AddNeurons(
-                new Neuron(-1, ActivationFunctions.TanH),
-                count: 3
-            ).ToArray(),
+            //model.AddNeurons(
+            //    new Neuron(-1, ActivationFunctions.TanH),
+            //    count: 6
+            //).ToArray(),
 
             // Outputs
             model.AddOutputNeurons(
@@ -93,8 +93,8 @@ public class BalancerPopulation : PopulationProxy
         };
 
         model.ConnectLayers(layers);
-		model.ConnectBias(bias, layers.Skip(1));
-
+		//model.ConnectBias(bias, layers.Skip(1));
+        
         return model;
     }
 

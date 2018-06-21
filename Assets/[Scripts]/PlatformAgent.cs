@@ -114,7 +114,7 @@ public class PlatformAgent : AgentProxy
 
 	private float ComputeFitness()
 	{
-		return Time.time - startTime - (
-			0.1f * Vector3.Distance(ball.transform.localPosition, platform.localPosition));
+		return Time.time - startTime -
+            (0.1f * Vector3.Distance(ball.transform.localPosition, platform.localPosition));
 	}
 }

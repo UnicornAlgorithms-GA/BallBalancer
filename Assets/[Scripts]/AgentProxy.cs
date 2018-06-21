@@ -16,9 +16,11 @@ public abstract class AgentProxy : MonoBehaviour
 		this.populationProxy = populationProxy;
 	}
 
-	public virtual void ResetAgent(
-		NeuralGenome newNeuralGenome = null)
+	public virtual void ResetAgent(NeuralGenome newNeuralGenome = null)
 	{
+		if (newNeuralGenome != null)
+		    newNeuralGenome.NetworkOperationBaker.BakeNetwork(newNeuralGenome);
+		
 		this.neuralGenome = newNeuralGenome;
 
 		gameObject.SetActive(true);

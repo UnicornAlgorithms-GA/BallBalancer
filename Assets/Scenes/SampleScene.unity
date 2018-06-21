@@ -245,16 +245,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114226460082294698, guid: e94de82c9377e4222b545d80d9538612,
-        type: 2}
-      propertyPath: nbOfInputs
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226460082294698, guid: e94de82c9377e4222b545d80d9538612,
-        type: 2}
-      propertyPath: normBallVelocity
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e94de82c9377e4222b545d80d9538612, type: 2}
   m_IsPrefabParent: 0
@@ -448,6 +438,8 @@ MonoBehaviour:
   lowerInitLimit: {fileID: 302525369}
   distBetweenAgents: 12
   agentsPerRow: 10
+  randomForce: 200
+  randomForceInterval: 5
 --- !u!1 &1129890628
 GameObject:
   m_ObjectHideFlags: 0
