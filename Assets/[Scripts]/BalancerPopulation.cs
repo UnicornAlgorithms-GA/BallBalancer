@@ -5,6 +5,7 @@ using System.Linq;
 using GeneticLib.Neurology;
 using GeneticLib.Neurology.NeuralModels;
 using GeneticLib.Neurology.Neurons;
+using GeneticLib.Neurology.PredefinedStructures.LSTMs;
 using GeneticLib.Randomness;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ public class BalancerPopulation : PopulationProxy
 					(agent as PlatformAgent).ball.AddForce(
 						GARandomManager.NextFloat(-randomForce, randomForce),
                         0,
-						GARandomManager.NextFloat(-randomForce, randomForce)
+						0//GARandomManager.NextFloat(-randomForce, randomForce)
 					);
 				}
 			}
@@ -95,46 +96,41 @@ public class BalancerPopulation : PopulationProxy
         model.ConnectLayers(layers);
 		model.ConnectBias(bias, layers.Skip(1));
 
-		//foreach (var layer in layers.Skip(1))
-		//foreach (var neuron in layer)
+		//var memoryNeurons = new List<Neuron>();
+
+		//foreach (var neuron in layers.Last())
 		//{
 		//	var mem = model.AddNeurons(
-		//		sampleNeuron: new MemoryNeuron(-1, neuron.InnovationNb),
-		//		count: 1
-		//	);
-		//	model.AddConnection(mem[0].InnovationNb, neuron.InnovationNb);
+		//            sampleNeuron: new MemoryNeuron(-1, neuron.InnovationNb),
+		//            count: 1
+		//          );
+		//	memoryNeurons.Add(mem[0]);
 		//}
 
-		var memoryNeurons = new List<Neuron>();
+		//var memoryProcLayer1 = model.AddNeurons(
+		//	new Neuron(-1, ActivationFunctions.TanH),
+		//	count: 4
+		//).ToArray();
 
-		foreach (var neuron in layers.Last())
-		{
-			var mem = model.AddNeurons(
-              sampleNeuron: new MemoryNeuron(-1, neuron.InnovationNb),
-              count: 1
-            );
-			memoryNeurons.Add(mem[0]);
-		}
+		//var memoryProcLayer2 = model.AddNeurons(
+		//          new Neuron(-1, ActivationFunctions.TanH),
+		//          count: 4
+		//      ).ToArray();
 
-		var memoryProcLayer1 = model.AddNeurons(
-			new Neuron(-1, ActivationFunctions.TanH),
-			count: 4
-		).ToArray();
+		//model.ConnectLayers(
+		//	new Neuron[][]
+		//  		{
+		//  			memoryNeurons.ToArray(),
+		//  			memoryProcLayer1,
+		//	    memoryProcLayer2,
+		//  			layers.Last()
+		//  		}
+		//);
 
-		var memoryProcLayer2 = model.AddNeurons(
-            new Neuron(-1, ActivationFunctions.TanH),
-            count: 4
-        ).ToArray();
-
-		model.ConnectLayers(
-			new Neuron[][]
-    		{
-    			memoryNeurons.ToArray(),
-    			memoryProcLayer1,
-			    memoryProcLayer2,
-    			layers.Last()
-    		}
-		);
+		Neuron lstmIn, lstmOut;
+		model.AddLSTM(out lstmIn, out lstmOut, biasNeuron: bias);
+		model.ConnectNeurons(layers[0], new[] { lstmIn }).ToArray();
+		model.ConnectNeurons(new[] { lstmOut }, layers.Last()).ToArray();
 
         return model;
     }

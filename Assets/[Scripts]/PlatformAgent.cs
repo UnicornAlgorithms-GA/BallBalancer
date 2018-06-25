@@ -51,9 +51,9 @@ public class PlatformAgent : AgentProxy
 		Debug.Assert(outputs.Length == nbOfOutputs);
 
 		var desiredRot = Quaternion.Euler(
-			Mathf.Lerp(-maxPlatformAngle, maxPlatformAngle, outputs[0]),
+			0,//Mathf.Lerp(-maxPlatformAngle, maxPlatformAngle, outputs[0]),
 			0,
-			Mathf.Lerp(-maxPlatformAngle, maxPlatformAngle, outputs[1])
+			Mathf.Lerp(-maxPlatformAngle, maxPlatformAngle, outputs[0])
 		);
 
 		platform.rotation = Quaternion.Lerp(
@@ -67,13 +67,13 @@ public class PlatformAgent : AgentProxy
 		var result = new float[nbOfInputs];
 
 		result[0] = ball.transform.localPosition.x / platformCollider.bounds.extents.x;
-		result[1] = ball.transform.localPosition.z / platformCollider.bounds.extents.z;
+		//result[0] = ball.transform.localPosition.z / platformCollider.bounds.extents.z;
         
-		result[2] = Mathf.InverseLerp(
-			-maxPlatformAngle,
-			maxPlatformAngle,
-			platform.transform.rotation.eulerAngles.x);
-		result[3] = Mathf.InverseLerp(
+		//result[1] = Mathf.InverseLerp(
+			//-maxPlatformAngle,
+			//maxPlatformAngle,
+			//platform.transform.rotation.eulerAngles.x);
+		result[1] = Mathf.InverseLerp(
             -maxPlatformAngle,
             maxPlatformAngle,
             platform.transform.rotation.eulerAngles.z);
