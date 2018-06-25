@@ -114,8 +114,7 @@ public abstract class PopulationProxy : MonoBehaviour
     {
         var initialGenerationGenerator = new NeuralInitialGenerationCreatorBase(
 			InitNeuralModel(),
-            new RecursiveNetworkOpBaker()
-			//new FeedForwardOpBaker()
+			new FeedForwardOpBaker()
 		);
             
         var selection = new RouletteWheelSelectionWithRepetion();

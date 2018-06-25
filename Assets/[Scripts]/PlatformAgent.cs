@@ -64,23 +64,23 @@ public class PlatformAgent : AgentProxy
 
 	private float[] GenerateNetworkInputs()
 	{
-		var result = new float[6];
+		var result = new float[nbOfInputs];
 
 		result[0] = ball.transform.localPosition.x / platformCollider.bounds.extents.x;
 		result[1] = ball.transform.localPosition.z / platformCollider.bounds.extents.z;
-
-		result[2] = ball.velocity.x / normBallVelocity;
-		result[3] = ball.velocity.z / normBallVelocity;
-
-		result[4] = Mathf.InverseLerp(
+        
+		result[2] = Mathf.InverseLerp(
 			-maxPlatformAngle,
 			maxPlatformAngle,
 			platform.transform.rotation.eulerAngles.x);
-		result[5] = Mathf.InverseLerp(
+		result[3] = Mathf.InverseLerp(
             -maxPlatformAngle,
             maxPlatformAngle,
             platform.transform.rotation.eulerAngles.z);
-		
+
+		//result[4] = ball.velocity.x / normBallVelocity;
+        //result[5] = ball.velocity.z / normBallVelocity;
+
 		return result;
 	}
 

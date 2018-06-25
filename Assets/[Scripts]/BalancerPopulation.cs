@@ -71,7 +71,7 @@ public class BalancerPopulation : PopulationProxy
             weightConstraints.y
         );
 
-		//var bias = model.AddBiasNeuron();
+		var bias = model.AddBiasNeuron();
 
         var layers = new List<Neuron[]>()
         {
@@ -82,7 +82,7 @@ public class BalancerPopulation : PopulationProxy
 
             //model.AddNeurons(
             //    new Neuron(-1, ActivationFunctions.TanH),
-            //    count: 6
+            //    count: 4
             //).ToArray(),
 
             // Outputs
@@ -93,8 +93,49 @@ public class BalancerPopulation : PopulationProxy
         };
 
         model.ConnectLayers(layers);
-		//model.ConnectBias(bias, layers.Skip(1));
-        
+		model.ConnectBias(bias, layers.Skip(1));
+
+		//foreach (var layer in layers.Skip(1))
+		//foreach (var neuron in layer)
+		//{
+		//	var mem = model.AddNeurons(
+		//		sampleNeuron: new MemoryNeuron(-1, neuron.InnovationNb),
+		//		count: 1
+		//	);
+		//	model.AddConnection(mem[0].InnovationNb, neuron.InnovationNb);
+		//}
+
+		var memoryNeurons = new List<Neuron>();
+
+		foreach (var neuron in layers.Last())
+		{
+			var mem = model.AddNeurons(
+              sampleNeuron: new MemoryNeuron(-1, neuron.InnovationNb),
+              count: 1
+            );
+			memoryNeurons.Add(mem[0]);
+		}
+
+		var memoryProcLayer1 = model.AddNeurons(
+			new Neuron(-1, ActivationFunctions.TanH),
+			count: 4
+		).ToArray();
+
+		var memoryProcLayer2 = model.AddNeurons(
+            new Neuron(-1, ActivationFunctions.TanH),
+            count: 4
+        ).ToArray();
+
+		model.ConnectLayers(
+			new Neuron[][]
+    		{
+    			memoryNeurons.ToArray(),
+    			memoryProcLayer1,
+			    memoryProcLayer2,
+    			layers.Last()
+    		}
+		);
+
         return model;
     }
 

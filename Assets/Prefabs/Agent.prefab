@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921923a37c2dd49e094622c20a1567e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbOfInputs: 6
+  nbOfInputs: 4
   nbOfOutputs: 2
   ball: {fileID: 54119568358720950}
   platform: {fileID: 4735921823263126}
